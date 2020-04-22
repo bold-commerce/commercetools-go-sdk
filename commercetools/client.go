@@ -73,6 +73,8 @@ type QueryInput struct {
 
 	Limit  int
 	Offset int
+
+	WithTotal *bool
 }
 
 func (qi QueryInput) toParams() (values url.Values) {
@@ -96,6 +98,11 @@ func (qi QueryInput) toParams() (values url.Values) {
 
 	if qi.Offset != 0 {
 		values.Set("offset", strconv.Itoa(qi.Offset))
+	}
+
+	// https://docs.commercetools.com/http-api#pagedqueryresult
+	if qi.WithTotal != nil {
+		values.Set("withTotal", strconv.FormatBool(*qi.WithTotal))
 	}
 
 	return
