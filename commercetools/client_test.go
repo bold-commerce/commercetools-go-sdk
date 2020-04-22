@@ -113,6 +113,8 @@ func TestInvalidJsonError(t *testing.T) {
 }
 
 func TestQueryInput(t *testing.T) {
+	tr := true
+	fa := false
 	testCases := []struct {
 		desc     string
 		input    *commercetools.QueryInput
@@ -168,6 +170,34 @@ func TestQueryInput(t *testing.T) {
 				"offset": []string{"20"},
 			},
 			rawQuery: "offset=20",
+		},
+		{
+			desc: "WithTotal False",
+			input: &commercetools.QueryInput{
+				WithTotal: &fa,
+			},
+			query: url.Values{
+				"withTotal": []string{"false"},
+			},
+			rawQuery: "withTotal=false",
+		},
+		{
+			desc: "WithTotal True",
+			input: &commercetools.QueryInput{
+				WithTotal: &tr,
+			},
+			query: url.Values{
+				"withTotal": []string{"true"},
+			},
+			rawQuery: "withTotal=true",
+		},
+		{
+			desc: "WithTotal nil",
+			input: &commercetools.QueryInput{
+				WithTotal: nil,
+			},
+			query:    url.Values{},
+			rawQuery: "",
 		},
 	}
 
